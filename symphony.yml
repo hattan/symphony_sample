@@ -1,0 +1,53 @@
+environment: prod
+repositories:
+  - name: launchpad_lz
+    uri: git@github.com:Azure/caf-terraform-landingzones.git
+    branch: master
+  - name: solution_lz
+    uri: git@github.com:Azure/caf-terraform-landingzones.git
+    branch: master    
+  - name: launchpad_config
+    uri: git@github.com:Azure/caf-terraform-landingzones-starter.git
+    branch: master
+  - name: solution_aks_config
+    uri: git@github.com:Azure/caf-terraform-landingzones-starter.git
+    branch: master
+  - name: argocd_config
+    uri: git@github.com:Azure/caf-terraform-landingzones-starter.git
+    branch: master
+
+ # All paths are relative
+levels:
+- level: level0
+  type: platform
+  stacks:
+  - stack: launchpad
+    landingZonePath: landingzones/caf_launchpad/
+    configurationPath: configs/demo/level0/launchpad
+    tfState: caf_launchpad.tfstate 
+  launchpad: true
+- level: level1
+  type: platform
+  stacks:
+  - stack: foundation
+    landingZonePath: landingzones/caf_solution/
+    configurationPath: configs/demo/level1
+    tfState: caf_foundations.tfstate 
+- level: level2
+  type: platform
+  stacks:
+  - stack: networking
+    landingZonePath: landingzones/caf_solution/
+    configurationPath: configs/demo/level2/networking
+    tfState: networking_hub.tfstate 
+  - stack: sharedservices
+    landingZonePath: landingzones/caf_solution/
+    configurationPath: configs/demo/level2/shared_services
+    tfState: caf_shared_services.tfstate  
+- level: level3
+  type: platform
+  stacks:
+  - stack: aks
+    landingZonePath: landingzones/caf_solution/
+    configurationPath: configs/demo/level3/aks
+    tfState: landing_zone_aks.tfstate
